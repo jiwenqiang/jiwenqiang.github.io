@@ -100,3 +100,63 @@ function secmousedown(ev) {
 	};
 	ev.preventDefault();
 };
+
+var oWorks = document.querySelector('#works');
+var aWorksDiv = document.querySelectorAll('.box_work div');
+var aWorksContains = document.querySelectorAll('#works_contains>li');
+var iWorksDivR = 130;
+oWorks.onclick = function(ev) { //console.log(1);
+	setCtlArr();
+	ev.stopPropagation();
+};
+setCtlArr();
+
+function setCtlArr() {
+	oWorks.classList.toggle('active');
+	aWorksDiv.forEach(function(oDiv, index) {
+		clearTimeout(oDiv.timer);
+		oDiv.timer = setTimeout(function() {
+			if(oWorks.classList.contains('active')) {
+				oDiv.style.transform = `translateY(${Math.cos(dtr(index/3*90+90))*iWorksDivR}px) translateX(${Math.cos(dtr(index/3*90))*iWorksDivR}px)`;
+			} else {
+				oDiv.style.transform = '';
+			}
+			//console.log(dtr(index/3*90));
+
+		}, index * 100);
+	});
+}
+//alert(aWorksDiv.length);
+function dtr(deg) {
+	return deg / 180 * Math.PI;
+}
+aWorksDiv.forEach(function(oDiv, index) {
+	oDiv.onclick = function(ev) { //console.log(aWorksContains.length);
+		aWorksContains.forEach(function(oDivIn, ind) {
+			oDivIn.classList.remove('active');
+		});
+		aWorksContains[index].classList.add('active');
+		ev.stopPropagation();
+	};
+});
+//图片懒加载 使性能更好
+window.addEventListener('scroll', lazyLoad, false);
+var aImg = document.querySelectorAll('img');
+
+function lazyLoad() {
+	aImg.forEach(function(oImg, index) {
+		if(oImg.src == '' && (getFinilOffsetTop(oImg) - document.body.scrollTop) <= document.documentElement.clientHeight) {
+			oImg.src = oImg.getAttribute('_src');
+			console.log(1);
+		}
+	});
+}
+
+function getFinilOffsetTop(obj) {
+	var t = 0;
+	while(obj.offsetParent) {
+		t += obj.offsetTop;
+		obj = obj.offsetParent;
+	}
+	return t;
+}
