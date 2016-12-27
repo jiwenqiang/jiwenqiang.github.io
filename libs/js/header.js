@@ -40,8 +40,8 @@ aHeaderUlLi.forEach(function(oli, index) {
 		ev.preventDefault();
 	};
 });
-
-window.onwheel = function({
+window.addEventListener('wheel',mouseWheelAll,false);
+function mouseWheelAll({
 	wheelDelta
 }) {
 	if(wheelDelta > 0) {
