@@ -147,7 +147,7 @@ function lazyLoad() {
 	aImg.forEach(function(oImg, index) {
 		if(oImg.src == '' && (getFinilOffsetTop(oImg) - document.body.scrollTop) <= document.documentElement.clientHeight) {
 			oImg.src = oImg.getAttribute('_src');
-			console.log(1);
+			//console.log(1);
 		}
 	});
 }
