@@ -1,7 +1,8 @@
+alert('本页面使用ECMA6语法,chrome支持度最高。请勿使用360！！！');
 if(window.navigator.userAgent.indexOf('Chrome')==-1){
 	alert("请使用谷歌浏览器");
 }
-//console.log(window.navigator.userAgent);
+console.log('本页面全部采用原生JS效果,不含任何添加库');
 
 var oC = document.querySelector('canvas');
 var ctx = oC.getContext('2d');
