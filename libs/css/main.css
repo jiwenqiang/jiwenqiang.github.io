@@ -1,0 +1,188 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-decoration: none;
+}
+
+body {
+	height: 1000px;
+	overflow-x: hidden;
+}
+
+canvas {
+	background: rgba(0, 0, 0, 0.1);
+	display: block;
+	/*cursor: none;*/
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+
+header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background: rgba(0, 0, 0, 0.7);
+	padding: 10px 0;
+}
+
+header>ul {
+	font-size: 30px;
+	width: 800px;
+	height: 40px;
+	margin: 0 auto;
+}
+
+header>ul>li {
+	float: left;
+	height: 40px;
+	width: 150px;
+	line-height: 40px;
+	text-align: center;
+	margin: 0 5px;
+	position: relative;
+	perspective: 800px;
+}
+
+header>ul>li>div {
+	transform-style: preserve-3d;
+	height: 40px;
+	width: 150px;
+	transition: .7s cubic-bezier(0.54, 0.08, 0.48, 1.71);
+	;
+}
+
+header>ul>li>div>a {
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 40px;
+	width: 150px;
+	background: rgba(12, 141, 217, 0.8);
+	border-radius: 5px;
+	transform-style: preserve-3d;
+	transform: translateZ(22px);
+}
+
+header>ul>li>div>a:last-child {
+	transform: rotateX(-90deg) translateZ(22px);
+	background: rgba(101, 193, 216, 0.8);
+}
+
+header>ul>li>div:hover {
+	transform: rotateX(90deg);
+}
+
+header>ol {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	height: 40px;
+	width: 25px;
+	cursor: pointer;
+}
+
+header>ol>li {
+	width: 5px;
+	height: 2px;
+	background: rgb(12, 141, 217);
+	position: absolute;
+	bottom: 0;
+}
+
+header>ol>li:nth-child(1) {
+	animation: music .5s ease-in-out infinite alternate;
+}
+
+header>ol>li:nth-child(2) {
+	animation: music .3s ease-in-out infinite alternate;
+}
+
+header>ol>li:nth-child(3) {
+	animation: music .6s ease-in-out infinite alternate;
+}
+
+@keyframes music {
+	to {
+		height: 30px;
+	}
+}
+
+section {
+	width: 100%;
+	z-index: 0;
+	perspective: 1800px;
+	position: relative;
+}
+
+section:nth-child(odd) {
+	z-index: 2;
+}
+
+section.one {
+	background: url(../../static/img/a3.jpg) no-repeat left center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+section.two {
+	background: url(../../static/img/a5.jpg) no-repeat left center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+section.three {
+	background: url(../../static/img/a2.jpg) no-repeat left center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+section.four {
+	background: url(../../static/img/bg1.jpg) no-repeat left center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+section.five {
+	background: url(../../static/img/bg2.jpg) no-repeat left center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+.wrap {
+	height: 300px;
+	width: 260px;
+	margin: 350px auto;
+	/*border: 1px solid #ccc;*/
+	position: relative;
+	transform-style: preserve-3d;
+}
+
+.box {
+	height: 300px;
+	width: 240px;
+	background-size: cover;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-radius: 10px;
+	box-shadow: 0 0 20px white;
+}
+
+.box2 {
+	height: 300px;
+	width: 240px;
+	background-size: cover;
+	position: absolute;
+	left: 0;
+	top: 320px;
+	border-radius: 10px;
+	transform: scale(1, -1);
+	-webkit-mask: linear-gradient(rgba(0, 0, 0, 0) 80%, red);
+	-moz-mask: linear-gradient(rgba(0, 0, 0, 0) 80%, red);
+}
