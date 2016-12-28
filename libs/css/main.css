@@ -518,3 +518,50 @@ section.five {
 	left: 400px;
 	line-height: 40px;
 }
+
+.welcome {
+	position: absolute;
+	height: 300px;
+	width: 800px;
+	color: #fff;
+	top: 50%;
+	margin-top: -150px;
+	left: 50%;
+	margin-left: -400px;
+	font-size: 200px;
+	text-align: center;
+	line-height: 300px;
+	text-shadow: 0 0 20px #fff;
+	animation: 1s rubberBand;
+}
+
+@keyframes rubberBand {
+	from {
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
+	}
+	30% {
+		-webkit-transform: scale3d(1.25, 0.75, 1);
+		transform: scale3d(1.25, 0.75, 1);
+	}
+	40% {
+		-webkit-transform: scale3d(0.75, 1.25, 1);
+		transform: scale3d(0.75, 1.25, 1);
+	}
+	50% {
+		-webkit-transform: scale3d(1.15, 0.85, 1);
+		transform: scale3d(1.15, 0.85, 1);
+	}
+	65% {
+		-webkit-transform: scale3d(.95, 1.05, 1);
+		transform: scale3d(.95, 1.05, 1);
+	}
+	75% {
+		-webkit-transform: scale3d(1.05, .95, 1);
+		transform: scale3d(1.05, .95, 1);
+	}
+	to {
+		-webkit-transform: scale3d(1, 1, 1);
+		transform: scale3d(1, 1, 1);
+	}
+}
