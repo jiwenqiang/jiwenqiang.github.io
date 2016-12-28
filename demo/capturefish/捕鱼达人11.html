@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			background-color: black;
+			margin: 0;
+		}
+
+		canvas{
+			background: url(statics/FishingMaster/img/game_bg_2_hd.jpg);
+		}
+	</style>
+</head>
+<body>
+	<canvas width="800" height="600"></canvas>
+	<script src="js/common.js"></script>
+	<script src="js/resources.js"></script>
+	<script src="js/fish.js"></script>
+	<script src="js/cannon.js"></script>
+	<script src="js/bullet.js"></script>
+	<script src="js/dieFish.js"></script>
+	<script src="js/net.js"></script>
+	<script src="js/coin.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+		var cannonCount = 0;
+
+		loadImage(statics,function(){
+			var cannon = new Cannon(1);
+			
+			setInterval(function(){
+				ctx.clearRect(0,0,oC.width,oC.height)
+
+				addFish();
+				drawTasks(ctx,cannon);
+
+				cannon.draw();
+			},16)
+
+			window.onkeyup = function({keyCode}){
+				var rotate = cannon.rotate;
+
+				if( keyCode == 38 ){
+					cannonCount++
+					cannon = new Cannon(cannonCount%7+1);
+
+					var newCannon = new Cannon(cannonCount%7+1);
+					newCannon.rotate = rotate;
+
+					cannon = newCannon
+				} else {
+					cannonCount--;
+
+					if( cannonCount < 0 ){
+						cannonCount = 6;
+					}
+
+					var newCannon = new Cannon(cannonCount%7+1);
+					newCannon.rotate = rotate;
+
+					cannon = newCannon
+				}
+
+			}
+
+			oC.onclick = function({clientX,clientY}){
+				var deltaX = clientX - cannon.x;
+				var deltaY = cannon.y - clientY;
+
+				var degree = Math.atan2(deltaX,deltaY);
+
+				// 炮转
+				cannon.rotate = a2d(degree);
+				cannon.emit();
+
+				var bullet = new Bullet(cannon.kind);
+					bullet.x = cannon.x;
+					bullet.y = cannon.y;
+					bullet.rotate = cannon.rotate;
+
+				// 填子弹
+				bulletArray.push(bullet);
+			}
+		})
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
