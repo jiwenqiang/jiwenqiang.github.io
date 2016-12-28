@@ -160,3 +160,12 @@ function getFinilOffsetTop(obj) {
 	}
 	return t;
 }
+//首页Q弹效果
+var oWelcome = document.querySelector('.welcome');
+oWelcome.onclick = function(ev) {
+	this.classList.remove('movewelcome');
+	setTimeout(() => {
+		this.classList.add('movewelcome');
+	}, 10);
+	ev.stopPropagation();
+};
