@@ -162,6 +162,9 @@ function getFinilOffsetTop(obj) {
 }
 //首页Q弹效果
 var oWelcome = document.querySelector('.welcome');
+oWelcome.timer = setTimeout(function(){
+	oWelcome.classList.add('movewelcome');
+},1000);
 oWelcome.onclick = function(ev) {
 	this.classList.remove('movewelcome');
 	clearTimeout(this.timer);
