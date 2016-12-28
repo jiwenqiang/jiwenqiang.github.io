@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			canvas{
+				display: block;
+				margin: 100px auto;
+				background: black;
+				/*cursor: pointer;*/
+			}
+			#btn{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				height: 20px;
+				width: 100px;
+				margin-top: 50px;
+				margin-left: -50px;
+			}
+			#readygame{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				height: 20px;
+				width: 200px;
+				margin-top: -10px;
+				margin-left: -100px;
+				color: white;
+				font-size: 20px;
+				font-weight: bold;
+				text-align: center;
+				display: none;
+			}
+			.time{
+				position: absolute;
+				left: 50%;
+				top: 100px;
+				margin-left: -100px;
+				height: 30px;
+				width: 200px;
+				text-align: center;
+				line-height: 30px;
+				font-size: 20px;
+				color: white;
+			}
+			#level{
+				position: absolute;
+				top: 30px;
+				left: 50%;
+				margin-left: -50px;
+				width: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="" width="800" height="800"></canvas>
+		<input type="button" id="btn" value="开始游戏" />
+		<div id="readygame">准备开始</div>
+		<div class="time">当前时间:0</div>
+		<select name="" id="level">
+			<option value="1">难度1</option>
+			<option value="2">难度2</option>
+			<option value="3">难度3</option>
+			<option value="4">难度4</option>
+			<option value="5">难度5</option>
+			<option value="6">难度6</option>
+			<option value="7">难度7</option>
+			<option value="8">难度8</option>
+			<option value="9">难度9</option>
+			<option value="10">难度10</option>
+		</select>
+		<script type="text/javascript">
+			var oCanvas = document.querySelector('canvas');
+			var oBtn = document.querySelector('#btn');
+			var oReady = document.querySelector('#readygame');
+			var oTime = document.querySelector('.time');
+			var oLevel = document.querySelector('#level');
+ 			var ctx =  oCanvas.getContext('2d');
+ 			var gameTime = 0;
+ 			var readyTime = 3;
+ 			var level = 1;
+ 			
+ 			oBtn.onclick = function(){
+ 				this.style.display = 'none';
+ 				oReady.style.display = 'block';
+ 				oReady.innerHTML = readyTime;
+ 				oReady.timer = setInterval(function(){
+ 					readyTime--;
+ 					if(readyTime==0){
+ 						oReady.style.display = 'none';
+ 						clearInterval(oReady.timer);
+ 						beginGame();
+ 					}
+ 					oReady.innerHTML = readyTime;
+ 				},1000);
+ 			};
+ 			
+ 			var beginBox = 100;
+ 			function beginGame(){
+ 				var boxArr = [];
+ 				//建立点数据
+ 				for(var i=0;i<beginBox;i++){
+ 					var docSin = rndSing();
+ 					var size = rnd(10,15);
+ 					if(docSin==1){
+ 						var y = rnd(0,oCanvas.height);
+ 						var x = rndSing()>0?0:oCanvas.width-size;
+ 					}else{
+ 						var x=rnd(0,oCanvas.width);
+ 						var y = rndSing()>0?0:oCanvas.height-size;
+ 					}
+ 					boxArr.push({
+ 						x:x,
+ 						y:y,
+ 						size:size,
+ 						speedX:rndSing()*rnd(10,40)*0.01*level,
+ 						speedY:rndSing()*rnd(10,40)*0.01*level,
+ 						col:`rgba(${rnd(0,255)},${rnd(0,255)},${rnd(0,255)},1)`
+ 					});
+ 				}
+ 				//console.log(boxArr);
+ 				var doc = {x:400,y:400,speedX:0,speedY:0,size:10};
+ 				boxArr.unshift(doc);
+   				oReady.timer = setInterval(function(){
+ 					ctx.clearRect(0,0,oCanvas.width,oCanvas.height);
+	 				
+ 					//从画布四周出点
+	 				boxArr.forEach(function(box,index){//console.log(box);
+	 					ctx.beginPath();
+	 					ctx.fillRect(box.x,box.y,box.size,box.size);
+	 					ctx.fillStyle = box.col;
+	 					ctx.fill();
+	 					//碰撞检测
+	 					if(index!=0){
+	 						//var bsin = doc.x+doc.size>box.x||doc.y+doc.size>box.y||box.y+box.size>doc.y||box.x+box.size>doc.x;
+	 						var bsin = doc.x-box.x<box.size&&doc.x-box.x>0&&doc.y-box.y<box.size&&doc.y-box.y>0;
+	 						var bsin2 = box.x-doc.x<doc.size&&box.x-doc.x>0&&box.y-doc.y<doc.size&&box.y-doc.y>0
+	 						if(bsin||bsin2){
+	 							clearInterval(oReady.timer);
+	 							oBtn.style.display = 'block';
+	 							oReady.style.display = 'block';
+	 							oBtn.value = '重新开始';
+	 							if(gameTime>localStorage.getItem('gameTime')){
+	 								oReady.innerHTML = `本次为历史最好成绩:${parseInt(gameTime*16/1000)}秒`;
+	 							}else{
+	 								oReady.innerHTML = `此次时间为:${parseInt(gameTime*16/1000)}秒`;
+	 							}
+	 							ctx.clearRect(0,0,oCanvas.width,oCanvas.height);
+	 							localStorage.setItem('gameTime',`${gameTime}`);//设置
+	 							readyTime = 3;
+	 							gameTime = 0;
+	 						}
+	 					}
+	 					
+	 					if(box.x<0||box.x>oCanvas.width-box.size)box.speedX*=-1;
+	 					if(box.y<0||box.y>oCanvas.height-box.size)box.speedY*=-1;
+	 					box.x += box.speedX;
+	 					box.y += box.speedY;
+	 					
+	 				});
+	 				
+	 				gameTime++;
+ 					oTime.innerHTML = `当前时间:${parseInt(gameTime*16/1000)}秒`;
+ 					//console.log(gameTime);
+	 				
+   				},16);
+ 				
+ 				
+ 				document.onmousemove = function({clientX,clientY}){
+ 					doc.x = clientX-oCanvas.offsetLeft;
+ 					doc.y = clientY-oCanvas.offsetTop;
+ 					//console.log(doc.x,doc.y);
+ 				};
+ 				
+ 			}
+ 			oLevel.onchange = function(){
+ 				level = this.value;
+ 				beginBox = 100 - level*4;
+ 			}
+ 			function rnd(n,m){
+ 				return parseInt(Math.random()*(m-n)+n);
+ 			}
+ 			function rndSing(){
+ 				return Math.random()>0.5?-1:1;
+ 			}
+		</script>
+	</body>
+</html>
