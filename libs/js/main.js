@@ -164,7 +164,8 @@ function getFinilOffsetTop(obj) {
 var oWelcome = document.querySelector('.welcome');
 oWelcome.onclick = function(ev) {
 	this.classList.remove('movewelcome');
-	setTimeout(() => {
+	clearTimeout(this.timer);
+	this.timer = setTimeout(() => {
 		this.classList.add('movewelcome');
 	}, 10);
 	ev.stopPropagation();
