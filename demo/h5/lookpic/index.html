@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body{
+				background: black;
+			}
+			.box{
+				width: 600px;
+				height: 400px;
+				background: url(5.jpg) no-repeat;
+				background-size: contain;
+				margin:100px auto;
+				/*-webkit-mask:-webkit-radial-gradient(20px 30px,circle,red 50px,rgba(0,0,0,0) 100px);*/
+				-webkit-mask:-webkit-radial-gradient(0 0,circle,red 50px,rgba(0,0,0,0) 100px);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			
+		</div>
+		<script type="text/javascript">
+			var aBox = document.querySelector('.box');
+			aBox.onmousemove = function({clientX,clientY}){
+				this.style.webkitMask = `-webkit-radial-gradient(${clientX - this.offsetLeft}px ${clientY - this.offsetTop}px,circle,red 50px,rgba(0,0,0,0) 100px)`;
+			};
+		</script>
+	</body>
+</html>

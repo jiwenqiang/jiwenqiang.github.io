@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			ul {
+				height: 402px;
+				width: 820px;
+				margin: 400px auto;
+			}
+			
+			li {
+				float: left;
+				background: black;
+				color: #FE6700;
+				height: 400px;
+				width: 100px;
+				border: 1px solid blanchedalmond;
+				text-align: center;
+				line-height: 180px;
+				font-size: 30px;
+				font-weight: bold;
+				transform-origin: top center;
+			}
+			
+			li:nth-child(odd) {
+				background: white;
+			}
+			
+			li.active {
+				transform: perspective(800px) rotateX(-10deg);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="">
+			3345 | 5432 | 1123 | 3.22- | 3345 | 5432 | 1123 | 2.11- || 2231 |2 34 31|2 34 32|12(5)3 | 3345 |54 34 2|1123 | 2.11- ||
+			<br /> 小星星 1 1|5 5|6 6|5－|4 4|3 3|2 2|1－| 5 5|4 4|3 3|2－|5 5|4 4|3 3|2－| 1 1|5 5|6 6|5－|4 4|3 3|2 2|1－||
+			<br />
+		</div>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li>
+		</ul>
+		<script src="sound.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var oAudio = document.querySelector('audio');
+			var aLi = document.querySelectorAll('li');
+
+			window.onkeydown = function({
+				keyCode
+			}) {
+				if(keyCode < 49 || keyCode > 56) return;
+				console.log(keyCode);
+				createAudio(keyCode);
+				aLi[keyCode - 49].classList.add('active');
+			};
+
+			window.onkeyup = function({
+				keyCode
+			}) {
+				if(keyCode < 49 || keyCode > 56) return;
+				console.log(keyCode);
+				aLi[keyCode - 49].classList.remove('active');
+			}
+
+			aLi.forEach(function(el, index) {
+				el.onmousedown = function() {
+					createAudio(index + 49);
+					this.classList.add('active');
+				};
+				el.onmouseup = function() { //alert(this);
+					this.classList.remove('active');
+				};
+			});
+
+			function createAudio(keyCode) {
+				var oAudio = new Audio(oggSound[`sound${keyCode}`]);
+				oAudio.play();
+				oAudio.onended = function() {
+					oAudio = null;
+				};
+			}
+		</script>
+	</body>
+
+</html>

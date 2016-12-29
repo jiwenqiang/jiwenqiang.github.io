@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.wrap{
+				height: 400px;
+				width: 800px;
+				border: 1px solid #000;
+				margin: 100px auto;
+				perspective: 800px;
+				overflow: hidden;
+			}
+			.wrap ul{
+				height: 400px;
+				width: 800px;
+				position: relative;
+				transform-style: preserve-3d;
+			}
+			.wrap ul li{
+				height: 300px;
+				width: 400px;
+				border: 1px solid #000;
+				position: absolute;
+				top: 50px;
+				background: #00BFFF;
+				color: #fff;
+				line-height: 300px;
+				text-align: center;
+				transition: 1s;
+			}
+			.wrap ul .current{
+				left: 200px;
+				z-index: 100;
+				background: #00BFFF;
+			}
+			.wrap ul .after1{
+				transform: rotateY(50deg) scale(0.7);
+				left: 0px;
+				z-index: 99;
+			}
+			.wrap ul .after2{
+				left: -200px;
+				transform: rotateY(70deg) scale(0.5);
+				opacity: 0;
+				z-index: 88;
+			}
+			.wrap ul .before1{
+				left: 400px;
+				transform: rotateY(-50deg) scale(0.7);
+				z-index: 99;
+			}
+			.wrap ul .before2{
+				left: 600px;
+				transform: rotateY(-70deg) scale(0.5);
+				opacity: 0;
+				z-index: 88;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<ul>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var aLi = document.querySelectorAll('li');
+			var arr = ['after2','after1','current','before1','before2'];
+			var bSin = true;
+			window.onkeyup = function({keyCode}){
+				if(keyCode==37){console.log(1);
+					if(!bSin)return;
+					bSin = false;
+					arr.push(arr.shift());
+					setClassName();
+				}else if(keyCode==39){
+					if(!bSin)return;
+					bSin = false;
+					arr.unshift(arr.pop());
+					setClassName();
+				}
+			};
+			setClassName();
+			//同步数组和元素class类
+			function setClassName(){
+				aLi.forEach(function(el,index){
+					el.className = arr[index];
+				});
+			}
+			aLi[0].addEventListener('transitionend',function(){
+				bSin = true;
+			},false);
+			
+		</script>
+	</body>
+</html>
